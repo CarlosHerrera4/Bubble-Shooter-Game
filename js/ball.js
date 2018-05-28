@@ -12,7 +12,7 @@ function Ball(ctx, x, y, radius) {
 }
 
 Ball.prototype.setRandomColor = function () {
-    this.ctx.fillStyle = "red";
+    this.ctx.fillStyle = "blue";
 }
 
 Ball.prototype.faster = function () {
