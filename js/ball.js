@@ -1,23 +1,64 @@
-function Ball(ctx, x, y, radius) {
+function Ball(ctx, x, y, radius, dx, dy) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.r = this.radius;
 
-    this.vx = 10;
-    this.vy = 2;
+    // this.vx = 20;
+    // this.vy = 10;
+    this.vx = dx;
+    this.vy = dy;
 
-    //this.g = 0.2;
+    // this.dx = dx;
+    // this.dy = dy;
+    // this.g = 0.2;
 }
 
 Ball.prototype.clear = function() {
     this.ctx.clearRect(0,0,0,0);
-}
+};
 
 Ball.prototype.setRandomColor = function () {
     this.ctx.fillStyle = "blue";
-}
+};
+
+Ball.prototype.move = function () {
+    // this.x += this.vx;
+    // this.vy += this.g;
+    // this.y += this.vy;
+    if (this.x + this.radius > this.ctx.canvas.width ||
+        this.x - this.radius < 0) {
+        this.vx = - this.vx;
+        this.x += this.vx;
+    }
+
+    else if (this.y + this.radius > this.ctx.canvas.height ||
+        this.y - this.radius < 0) {
+        this.vy *= -1;
+    }
+    else {
+        this.x += this.vx;
+        this.y -= this.vy;
+    }
+};
+
+Ball.prototype.draw = function () {
+    this.setRandomColor();
+
+    this.ctx.beginPath();
+    this.ctx.arc(
+        this.x,
+        this.y,
+        this.radius,
+        0,
+        Math.PI * 2
+    );
+
+    this.ctx.fill();
+
+    this.ctx.closePath();
+};
 
 // Ball.prototype.faster = function () {
 //     this.vx *= 1.1;
@@ -52,49 +93,3 @@ Ball.prototype.setRandomColor = function () {
 //         this.x -= this.vx;
 //     }
 // }
-
-Ball.prototype.move = function (unitX, unitY) {
-    // this.x += this.vx;
-    // this.vy += this.g;
-    // this.y += this.vy;
-
-
-
-    if (this.x + this.radius > this.ctx.canvas.width ||
-        this.x - this.radius < 0) {
-        this.vx *= -1;
-        // this.x -= unitX;
-    }
-
-    else if (this.y + this.radius > this.ctx.canvas.height ||
-        this.y - this.radius < 0) {
-        this.vy *= -1;
-    }
-    else {
-        this.x += unitX;
-        this.y -= unitY;
-
-        // this.x += this.vx;
-        // this.vy += this.g;
-        // this.y += this.vy;
-
-    }
-
-};
-
-Ball.prototype.draw = function () {
-    this.setRandomColor();
-
-    this.ctx.beginPath();
-    this.ctx.arc(
-        this.x,
-        this.y,
-        this.radius,
-        0,
-        Math.PI * 2
-    )
-
-    this.ctx.fill();
-
-    this.ctx.closePath();
-}
