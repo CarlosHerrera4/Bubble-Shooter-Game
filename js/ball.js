@@ -13,6 +13,12 @@ function Ball(ctx, x, y, radius, dx, dy) {
     // this.dx = dx;
     // this.dy = dy;
     // this.g = 0.2;
+    this.color = setRandomColor();
+
+    function setRandomColor () {
+        var colors = ['#cc0000', '#ffff00', '#39e600', '#4d4dff', '#00ffff', '#e600e6'];
+        return colors[Math.round(Math.random() * 5)];
+    }
 }
 
 Ball.prototype.clear = function() {
@@ -22,7 +28,7 @@ Ball.prototype.clear = function() {
 Ball.prototype.setRandomColor = function () {
     // var colors [rojo, amarillo, verde, azul, celeste, morado]
     var colors = ['#cc0000', '#ffff00', '#39e600', '#4d4dff', '#00ffff', '#e600e6'];
-    this.ctx.fillStyle = colors[Math.round(Math.random() * 5)];
+    //this.ctx.fillStyle = colors[Math.round(Math.random() * 5)];
 };
 
 Ball.prototype.move = function () {
@@ -46,8 +52,6 @@ Ball.prototype.move = function () {
 };
 
 Ball.prototype.draw = function () {
-    this.setRandomColor();
-
     this.ctx.beginPath();
     this.ctx.arc(
         this.x,
@@ -57,6 +61,7 @@ Ball.prototype.draw = function () {
         Math.PI * 2
     );
 
+    this.ctx.fillStyle = this.color;
     this.ctx.fill();
 
     this.ctx.closePath();
