@@ -3,7 +3,7 @@ window.onload = function () {
     canvas.classList.add("canvas-space");
     var ctx = canvas.getContext("2d");
 
-    canvas.width = 900;
+    canvas.width = 880;
     canvas.height = 600;
 
     var balls = [];
@@ -11,6 +11,7 @@ window.onload = function () {
     // document.getElementsByClassName('spaceCanvas')[0].appendChild(canvas);
     this._canvas = $('.spaceCanvas')[0].appendChild(canvas);
 
+    //Pinto bola principal
     var ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
     ball.draw();
 

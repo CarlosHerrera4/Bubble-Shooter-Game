@@ -20,7 +20,9 @@ Ball.prototype.clear = function() {
 };
 
 Ball.prototype.setRandomColor = function () {
-    this.ctx.fillStyle = "blue";
+    // var colors [rojo, amarillo, verde, azul, celeste, morado]
+    var colors = ['#cc0000', '#ffff00', '#39e600', '#4d4dff', '#00ffff', '#e600e6'];
+    this.ctx.fillStyle = colors[Math.round(Math.random() * 5)];
 };
 
 Ball.prototype.move = function () {
