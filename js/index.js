@@ -63,10 +63,13 @@ window.onload = function () {
 
         var interval = setInterval(drawBall, 16);
         function drawBall() {
-            if (checkIfBallHit(ball, topBalls) === true) {
-            // if (_check) {
-                // ctx.clearRect(ball.x - 20, ball.y - 20, 40, 40);
+            var results = checkIfBallHit(ball, topBalls);
+            // if (checkIfBallHit(ball, topBalls)[0] === true) {
+            if (results[0] === true) {
                 clearInterval(interval);
+                // Calculamos punto de colisión
+                var collisionX = ((results[1].x * 20) + (ball.x * 20)) / (20 + 20);
+                var collisionY = ((results[1].y * 20) + (ball.y * 20)) / (20 + 20);
 
                 // Creamos bola nueva cuando desaparece la primera
                 ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
@@ -122,20 +125,19 @@ window.onload = function () {
 
         function checkIfBallHit(ball, topBalls) {
             var state = false;
+            var collisionBall;
             for (i = 0; i < topBalls.length; i++) {
                     for (j = 0; j < topBalls[i].length; j++) {
-                    console.log("i: " + i);
-                    console.log("j: " + j);
                     a = topBalls[i][j].x - ball.x;
                     b = topBalls[i][j].y - ball.y;
                     var distance = Math.sqrt((a * a) + (b * b));
-                    console.log(a + ", " + b);
                     if (distance <= 40 && state === false) {
+                        collisionBall = topBalls[i][j];
                         state = true;
                     }
                 }
             }
-            return state;
+            return [state, collisionBall];
         }
 
     });
