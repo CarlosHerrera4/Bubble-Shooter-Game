@@ -65,11 +65,32 @@ window.onload = function () {
         function drawBall() {
             var results = checkIfBallHit(ball, topBalls);
             // if (checkIfBallHit(ball, topBalls)[0] === true) {
-            if (results[0] === true) {
+            if (results[0] === true) {  // Colisiona
                 clearInterval(interval);
+                var row = results[2];
+                var column = results[3];
+
                 // Calculamos punto de colisión
                 var collisionX = ((results[1].x * 20) + (ball.x * 20)) / (20 + 20);
                 var collisionY = ((results[1].y * 20) + (ball.y * 20)) / (20 + 20);
+                // Comprobamos en qué fila ponemos la bola
+                if (collisionX <= ball.x) {
+                    if (collisionX < ball.y) {
+
+                    }
+                    else if (collisionX > ball.y) {
+
+                    }
+                    else {
+
+                    }
+                }
+                else if (collisionX > ball.x) {
+                    
+                }
+                else {
+                    
+                }
 
                 // Creamos bola nueva cuando desaparece la primera
                 ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
@@ -84,11 +105,13 @@ window.onload = function () {
                 secondBall.draw();
                 thirdBall.draw();
             }
-            // Si no, la limipia y la mueve de sitio
-            else {
-                ctx.clearRect(ball.x - 20, ball.y - 20, 40, 40);
+            else {  // Si no, limpia todo el canvas y mueve la bola
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
                 ball.move();
                 ball.draw();
+
+                drawBalls();
             }
 
             // Si la bola llega a la parte superior del canvas se para el Interval
@@ -125,7 +148,7 @@ window.onload = function () {
 
         function checkIfBallHit(ball, topBalls) {
             var state = false;
-            var collisionBall;
+            var collisionBall, row, column;
             for (i = 0; i < topBalls.length; i++) {
                     for (j = 0; j < topBalls[i].length; j++) {
                     a = topBalls[i][j].x - ball.x;
@@ -134,10 +157,22 @@ window.onload = function () {
                     if (distance <= 40 && state === false) {
                         collisionBall = topBalls[i][j];
                         state = true;
+                        row = i;
+                        column = j;
                     }
                 }
             }
-            return [state, collisionBall];
+            return [state, collisionBall, row, column];
+        }
+
+        function drawBalls() {
+            for (i = 0; i < topBalls.length; i++) {
+                for (j = 0; j < topBalls[i].length; j++) {
+                    if (topBalls[i][j]) {
+                        topBalls[i][j].draw();
+                    }
+                }
+            }
         }
 
     });
