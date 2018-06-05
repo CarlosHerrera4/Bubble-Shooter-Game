@@ -41,6 +41,9 @@ window.onload = function () {
         topBalls.push(topBall);
         ii++;
     }
+    for (i = 0; i < 9; i++) {
+        topBalls.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
+    }
 
     // Pinto siguientes bolas
     var firstBall = new Ball(ctx2, (canvas2.width / 4) * 3, canvas2.height / 2, 20, 0, 0);
@@ -74,23 +77,64 @@ window.onload = function () {
                 var collisionX = ((results[1].x * 20) + (ball.x * 20)) / (20 + 20);
                 var collisionY = ((results[1].y * 20) + (ball.y * 20)) / (20 + 20);
                 // Comprobamos en qué fila ponemos la bola
-                if (collisionX <= ball.x) {
-                    if (collisionX < ball.y) {
-
+                if (collisionX <= ball.x) {  // Colisiona por la derecha de la bola
+                    if (collisionY < ball.y) {  // Abajo
+                        if (row % 2 === 0) {  //  Fila par
+                            topBalls[row + 1][column] = ball;
+                            ball.x = 40 + ((column + 1) * 40);
+                            ball.y = 20 + ((row + 1) * 40);
+                        }
+                        else {  // Fila impar
+                            topBalls[row + 1][column + 1] = ball;
+                            ball.x = 20 + ((column + 1) * 40);
+                            ball.y = 20 + ((row + 1) * 40);
+                        }
                     }
-                    else if (collisionX > ball.y) {
-
+                    else if (collisionY > ball.y) {  // Arriba
+                        if (row % 2 === 0) { 
+                            topBalls[row - 1][column + 1];
+                        }
+                        else {
+                            topBalls[row][column + 1];
+                        }
                     }
-                    else {
-
+                    else {  // Centro
+                        topBalls[row][column + 1];
                     }
                 }
-                else if (collisionX > ball.x) {
-                    
+                else if (collisionX > ball.x) {   // Colisiona por la izquierda de la bola
+                    if (collisionY < ball.y) {  // Abajo
+                        if (row % 2 === 0) {  //  Fila par
+                            topBalls[row + 1][column] = ball;
+                            ball.x = 40 + ((column + 1) * 40);
+                            ball.y = 20 + ((row + 1) * 40);
+                        }
+                        else {  // Fila impar
+                            topBalls[row + 1][column - 1] = ball;
+                            ball.x = 20 + ((column + 1) * 40);
+                            ball.y = 20 + ((row + 1) * 40);
+                        }
+                    }
+                    else if (collisionY > ball.y) {  // Arriba
+                        if (row % 2 === 0) {
+                            topBalls[row - 1][column - 1];
+                        }
+                        else {
+                            topBalls[row][column - 1];
+                        }
+                    }
+                    else {  // Centro
+                        topBalls[row][column - 1];
+                    }
                 }
                 else {
                     
                 }
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBalls();
+                console.log(topBalls);
+
 
                 // Creamos bola nueva cuando desaparece la primera
                 ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
@@ -114,31 +158,6 @@ window.onload = function () {
                 drawBalls();
             }
 
-            // Si la bola llega a la parte superior del canvas se para el Interval
-            // if ( ball.y  <= 20 ) {
-            //     ctx.clearRect(ball.x - 20, ball.y - 20, 40, 40);
-            //     clearInterval(interval);
-
-            //     // Creamos bola nueva cuando desaparece la primera
-            //     ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
-            //     ball.color = firstBall.color;
-            //     ball.draw();
-
-            //     // Cambiamos colores a las bolas siguientes
-            //     firstBall.color = secondBall.color;
-            //     secondBall.color = thirdBall.color;
-            //     thirdBall.color = setRandomColor();
-            //     firstBall.draw();
-            //     secondBall.draw();
-            //     thirdBall.draw();
-            // }
-            // // Si no, la limipia y la mueve de sitio
-            // else {
-            //     ctx.clearRect(ball.x - 20, ball.y - 20, 45, 45);
-            //     ball.move();
-            //     ball.draw();
-            // }
-
         }
 
         function setRandomColor() {
@@ -150,15 +169,17 @@ window.onload = function () {
             var state = false;
             var collisionBall, row, column;
             for (i = 0; i < topBalls.length; i++) {
-                    for (j = 0; j < topBalls[i].length; j++) {
-                    a = topBalls[i][j].x - ball.x;
-                    b = topBalls[i][j].y - ball.y;
-                    var distance = Math.sqrt((a * a) + (b * b));
-                    if (distance <= 40 && state === false) {
-                        collisionBall = topBalls[i][j];
-                        state = true;
-                        row = i;
-                        column = j;
+                for (j = 0; j < topBalls[i].length; j++) {
+                    if (topBalls[i][j]) {
+                        a = topBalls[i][j].x - ball.x;
+                        b = topBalls[i][j].y - ball.y;
+                        var distance = Math.sqrt((a * a) + (b * b));
+                        if (distance <= 40 && state === false) {
+                            collisionBall = topBalls[i][j];
+                            state = true;
+                            row = i;
+                            column = j;
+                        }
                     }
                 }
             }
