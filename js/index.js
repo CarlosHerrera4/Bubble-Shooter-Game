@@ -51,7 +51,6 @@ window.onload = function () {
     var ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0, null, null);
     ball.draw();
 
-
     // Evento cuando el usuario hace clic
     $(".canvas-space").click(function (evt) {
         // Calculamos velocidad
@@ -61,7 +60,6 @@ window.onload = function () {
         var interval = setInterval(drawBall, 16);
         function drawBall() {
             var results = checkIfBallHit(ball, topBalls);
-            // if (checkIfBallHit(ball, topBalls)[0] === true) {
             if (results[0] === true) {  // Colisiona
                 clearInterval(interval);
                 var row = results[2];
@@ -145,12 +143,20 @@ window.onload = function () {
                     
                 }
 
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                drawBalls();
-                console.log(topBalls);
 
                 // Comprobamos las bolas del mismo color para eliminarlas
+                var ballsDown = [];
+                ballsDown.push(ball);
+                checkBallsDown(ball, ballsDown);
+                if (ballsDown.length >= 3) {
+                    for (i = 0; i < ballsDown.length; i++) {
+                        topBalls[ballsDown[i].row][ballsDown[i].column] = null;
+                    }
+                }
 
+                // Limpiamos el canvas completo y pintamos de nuevo
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBalls();
 
 
                 // Creamos bola nueva cuando desaparece la primera
@@ -211,6 +217,93 @@ window.onload = function () {
                     }
                 }
             }
+        }
+
+        function checkBallsDown(ball, ballsDown) {
+            // Filas impares
+            if (ball.row % 2 === 0) {
+                if (topBalls[ball.row + 1][ball.column] && 
+                    ball.color === topBalls[ball.row + 1][ball.column].color &&
+                    ballsDown.indexOf(topBalls[ball.row + 1][ball.column]) === -1) {
+                        ballsDown.push(topBalls[ball.row + 1][ball.column]);
+                        checkBallsDown(topBalls[ball.row + 1][ball.column], ballsDown);
+                }
+                else if (topBalls[ball.row + 1][ball.column - 1] && 
+                    ball.color === topBalls[ball.row + 1][ball.column - 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row + 1][ball.column - 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row + 1][ball.column - 1]);
+                        checkBallsDown(topBalls[ball.row + 1][ball.column - 1], ballsDown);
+                }
+                else if (topBalls[ball.row][ball.column - 1] && 
+                    ball.color === topBalls[ball.row][ball.column - 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row][ball.column - 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row][ball.column - 1]);
+                        checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
+                }
+                else if (topBalls[ball.row - 1][ball.column - 1] && 
+                    ball.color === topBalls[ball.row - 1][ball.column - 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row - 1][ball.column - 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row - 1][ball.column - 1]);
+                        checkBallsDown(topBalls[ball.row - 1][ball.column - 1], ballsDown);
+                }
+                else if (topBalls[ball.row - 1][ball.column] && 
+                    ball.color === topBalls[ball.row - 1][ball.column].color &&
+                    ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
+                        ballsDown.push(topBalls[ball.row - 1][ball.column]);
+                        checkBallsDown(topBalls[ball.row - 1][ball.column], ballsDown);
+                }
+                else if (topBalls[ball.row][ball.column + 1] && 
+                    ball.color === topBalls[ball.row][ball.column + 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row][ball.column + 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row][ball.column + 1]);
+                        checkBallsDown(topBalls[ball.row][ball.column + 1], ballsDown);
+                }  
+                else {
+                    return;
+                }
+            }
+            else {
+                if (topBalls[ball.row + 1][ball.column] && 
+                    ball.color === topBalls[ball.row + 1][ball.column].color && 
+                    ballsDown.indexOf(topBalls[ball.row + 1][ball.column]) === -1 ) {
+                        ballsDown.push(topBalls[ball.row + 1][ball.column]);
+                        checkBallsDown(topBalls[ball.row + 1][ball.column], ballsDown);
+                }
+                else if (topBalls[ball.row + 1][ball.column + 1] && 
+                    ball.color === topBalls[ball.row + 1][ball.column + 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row + 1][ball.column + 1]) === -1 ) {
+                        ballsDown.push(topBalls[ball.row + 1][ball.column + 1]);
+                        ballsDown.push(topBalls[ball.row + 1][ball.column + 1], ballsDown);
+                }
+                else if (topBalls[ball.row][ball.column - 1] && 
+                    ball.color === topBalls[ball.row][ball.column - 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row][ball.column - 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row][ball.column - 1]);
+                        checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
+                }
+                else if (topBalls[ball.row - 1][ball.column + 1] && 
+                    ball.color === topBalls[ball.row - 1][ball.column + 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row - 1][ball.column + 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row - 1][ball.column + 1]);
+                        checkBallsDown(topBalls[ball.row - 1][ball.column + 1], ballsDown);
+                }
+                else if (topBalls[ball.row - 1][ball.column] && 
+                    ball.color === topBalls[ball.row - 1][ball.column].color &&
+                    ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
+                        ballsDown.push(topBalls[ball.row - 1][ball.column]);
+                        checkBallsDown(topBalls[ball.row - 1][ball.column], ballsDown);
+                }
+                else if (topBalls[ball.row][ball.column + 1] && 
+                    ball.color === topBalls[ball.row][ball.column + 1].color &&
+                    ballsDown.indexOf(topBalls[ball.row][ball.column + 1]) === -1) {
+                        ballsDown.push(topBalls[ball.row][ball.column + 1]);
+                        checkBallsDown(topBalls[ball.row][ball.column + 1], ballsDown);
+                }
+                else {
+                    return;
+                }  
+            }
+            
         }
 
     });
