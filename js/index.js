@@ -6,6 +6,10 @@ window.onload = function () {
     canvas.width = 900;
     canvas.height = 600;
 
+    var background = new Image();
+    background.src = "https://localhost:4443/Ironhack/Bubble-Shooter-Game/css/images/image-background.jpg";
+    ctx.drawImage(background, 0, 0);
+
     // Próximas bolas
     var canvas2 = document.createElement("canvas");
     canvas2.classList.add("canvas-next-balls");
@@ -143,7 +147,6 @@ window.onload = function () {
                     
                 }
 
-
                 // Comprobamos las bolas del mismo color para eliminarlas
                 var ballsDown = [];
                 ballsDown.push(ball);
@@ -156,6 +159,7 @@ window.onload = function () {
 
                 // Limpiamos el canvas completo y pintamos de nuevo
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawBackgroundCanvas();
                 drawBalls();
 
 
@@ -178,6 +182,7 @@ window.onload = function () {
                 ball.move();
                 ball.draw();
 
+                drawBackgroundCanvas();
                 drawBalls();
             }
 
@@ -240,13 +245,15 @@ window.onload = function () {
                         ballsDown.push(topBalls[ball.row][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1][ball.column - 1] && 
+                else if (topBalls[ball.row - 1] &&
+                    topBalls[ball.row - 1][ball.column - 1] && 
                     ball.color === topBalls[ball.row - 1][ball.column - 1].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column - 1]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1][ball.column] && 
+                else if (topBalls[ball.row - 1] &&
+                    topBalls[ball.row - 1][ball.column] && 
                     ball.color === topBalls[ball.row - 1][ball.column].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column]);
@@ -281,13 +288,15 @@ window.onload = function () {
                         ballsDown.push(topBalls[ball.row][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1][ball.column + 1] && 
+                else if (topBalls[ball.row - 1] &&
+                    topBalls[ball.row - 1][ball.column + 1] && 
                     ball.color === topBalls[ball.row - 1][ball.column + 1].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column + 1]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column + 1]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column + 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1][ball.column] && 
+                else if (topBalls[ball.row - 1] &&
+                    topBalls[ball.row - 1][ball.column] && 
                     ball.color === topBalls[ball.row - 1][ball.column].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column]);
@@ -304,6 +313,12 @@ window.onload = function () {
                 }  
             }
             
+        }
+
+        function drawBackgroundCanvas() {
+            var background = new Image();
+            background.src = "https://localhost:4443/Ironhack/Bubble-Shooter-Game/css/images/image-background.jpg";
+            ctx.drawImage(background, 0, 0);
         }
 
     });

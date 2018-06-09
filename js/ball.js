@@ -65,6 +65,10 @@ Ball.prototype.draw = function () {
 
     this.ctx.fillStyle = this.color;
     this.ctx.fill();
+    // 
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = 'black';
+    this.ctx.stroke();
 
     this.ctx.closePath();
 };
