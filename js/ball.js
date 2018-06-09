@@ -1,9 +1,11 @@
-function Ball(ctx, x, y, radius, dx, dy) {
+function Ball(ctx, x, y, radius, dx, dy, row, column) {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.r = this.radius;
+    this.row = row;
+    this.column = column;
 
     // this.vx = 20;
     // this.vy = 10;

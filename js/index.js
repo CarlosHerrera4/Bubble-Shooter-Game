@@ -18,43 +18,37 @@ window.onload = function () {
 
     // Pinto las bolas superiores
     var topBalls = [];
-    var ii = 2;
-    for (i = 20; i <= 220; i += 40) {
+    for (i = 0; i < 6; i++) {
         var topBall = [];
-        for (j = 20; j < canvas.width; j += 40) {
-            if (ii % 2 === 0) {
-                var _topBall = new Ball(ctx, j, i, 20, 0, 0);
+        for (j = 0; j < 22; j++) {
+            if ( i % 2 === 0) {
+                var _topBall = new Ball(ctx, 20 + (j * 40), 20 + (i * 40), 20, 0, 0, i, j);
                 _topBall.draw();
                 topBall.push(_topBall);
             }
             else {
-                var _topBall = new Ball(ctx, j + 20, i, 20, 0, 0);
+                var _topBall = new Ball(ctx, 40 + (j * 40), 20 + (i * 40), 20, 0, 0, i, j);
                 _topBall.draw();
                 topBall.push(_topBall);
             }
-
-
-            // var _topBall = new Ball(ctx, j, i, 20, 0, 0);
-            // _topBall.draw();
-            // topBall.push(_topBall);
         }
         topBalls.push(topBall);
-        ii++;
     }
+
     for (i = 0; i < 9; i++) {
         topBalls.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
     }
 
     // Pinto siguientes bolas
-    var firstBall = new Ball(ctx2, (canvas2.width / 4) * 3, canvas2.height / 2, 20, 0, 0);
-    var secondBall = new Ball(ctx2, (canvas2.width / 4) * 2, canvas2.height / 2, 20, 0, 0);
-    var thirdBall = new Ball(ctx2, (canvas2.width / 4), canvas2.height / 2, 20, 0, 0);
+    var firstBall = new Ball(ctx2, (canvas2.width / 4) * 3, canvas2.height / 2, 20, 0, 0, null, null);
+    var secondBall = new Ball(ctx2, (canvas2.width / 4) * 2, canvas2.height / 2, 20, 0, 0, null, null);
+    var thirdBall = new Ball(ctx2, (canvas2.width / 4), canvas2.height / 2, 20, 0, 0, null, null);
     firstBall.draw();
     secondBall.draw();
     thirdBall.draw();
 
     //Pinto bola principal
-    var ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
+    var ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0, null, null);
     ball.draw();
 
 
@@ -80,36 +74,50 @@ window.onload = function () {
                 if (collisionX <= ball.x) {  // Colisiona por la derecha de la bola
                     if (collisionY < ball.y) {  // Abajo
                         if (row % 2 === 0) {  //  Fila par
+                            ball.row = row + 1;
+                            ball.column = column;
                             topBalls[row + 1][column] = ball;
                             ball.x = 40 + ((column) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                         else {  // Fila impar
+                            ball.row = row + 1;
+                            ball.column = column + 1;
                             topBalls[row + 1][column + 1] = ball;
                             ball.x = 20 + ((column + 1) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                     }
                     else if (collisionY > ball.y) {  // Arriba
-                        if (row % 2 === 0) { 
-                            topBalls[row - 1][column + 1];
+                        if (row % 2 === 0) {
+                            ball.row = row - 1;
+                            ball.column = column + 1; 
+                            topBalls[row - 1][column + 1] = ball;
                         }
                         else {
-                            topBalls[row][column + 1];
+                            ball.row = row;
+                            ball.column = column + 1;
+                            topBalls[row][column + 1] = ball;
                         }
                     }
                     else {  // Centro
-                        topBalls[row][column + 1];
+                        ball.row = row;
+                        ball.column = column + 1;
+                        topBalls[row][column + 1] = ball;
                     }
                 }
                 else if (collisionX > ball.x) {   // Colisiona por la izquierda de la bola
                     if (collisionY < ball.y) {  // Abajo
                         if (row % 2 === 0) {  //  Fila par
+                            ball.row = row + 1;
+                            ball.column = column - 1;
                             topBalls[row + 1][column - 1] = ball;
                             ball.x = 40 + ((column - 1) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                         else {  // Fila impar
+                            ball.row = row + 1;
+                            ball.column = column;
                             topBalls[row + 1][column] = ball;
                             ball.x = 20 + ((column) * 40);
                             ball.y = 20 + ((row + 1) * 40);
@@ -117,13 +125,19 @@ window.onload = function () {
                     }
                     else if (collisionY > ball.y) {  // Arriba
                         if (row % 2 === 0) {
+                            ball.row = row - 1;
+                            ball.column = column - 1;
                             topBalls[row - 1][column - 1];
                         }
                         else {
+                            ball.row = row;
+                            ball.column = column - 1;
                             topBalls[row][column - 1];
                         }
                     }
                     else {  // Centro
+                        ball.row = row;
+                        ball.column = column - 1;
                         topBalls[row][column - 1];
                     }
                 }
@@ -135,9 +149,12 @@ window.onload = function () {
                 drawBalls();
                 console.log(topBalls);
 
+                // Comprobamos las bolas del mismo color para eliminarlas
+
+
 
                 // Creamos bola nueva cuando desaparece la primera
-                ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0);
+                ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0, null, null);
                 ball.color = firstBall.color;
                 ball.draw();
 
