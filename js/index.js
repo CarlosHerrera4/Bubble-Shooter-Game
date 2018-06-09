@@ -81,7 +81,7 @@ window.onload = function () {
                     if (collisionY < ball.y) {  // Abajo
                         if (row % 2 === 0) {  //  Fila par
                             topBalls[row + 1][column] = ball;
-                            ball.x = 40 + ((column + 1) * 40);
+                            ball.x = 40 + ((column) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                         else {  // Fila impar
@@ -105,13 +105,13 @@ window.onload = function () {
                 else if (collisionX > ball.x) {   // Colisiona por la izquierda de la bola
                     if (collisionY < ball.y) {  // Abajo
                         if (row % 2 === 0) {  //  Fila par
-                            topBalls[row + 1][column] = ball;
-                            ball.x = 40 + ((column + 1) * 40);
+                            topBalls[row + 1][column - 1] = ball;
+                            ball.x = 40 + ((column - 1) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                         else {  // Fila impar
-                            topBalls[row + 1][column - 1] = ball;
-                            ball.x = 20 + ((column + 1) * 40);
+                            topBalls[row + 1][column] = ball;
+                            ball.x = 20 + ((column) * 40);
                             ball.y = 20 + ((row + 1) * 40);
                         }
                     }
