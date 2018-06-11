@@ -6,9 +6,13 @@ window.onload = function () {
     canvas.width = 900;
     canvas.height = 600;
 
-    var background = new Image();
-    background.src = "https://localhost:4443/Ironhack/Bubble-Shooter-Game/css/images/image-background.jpg";
-    ctx.drawImage(background, 0, 0);
+    var _onload = drawBackgroundCanvas();
+
+    function drawBackgroundCanvas () {
+        var background = new Image();
+        background.src = "./css/images/image-background.jpg";
+        ctx.drawImage(background, 0, 0);
+    }
 
     // Próximas bolas
     var canvas2 = document.createElement("canvas");
@@ -210,6 +214,7 @@ window.onload = function () {
                     }
                 }
             }
+            console.log('CollisionBall: ' + collisionBall);
             return [state, collisionBall, row, column];
         }
 
@@ -226,39 +231,43 @@ window.onload = function () {
         function checkBallsDown(ball, ballsDown) {
             // Filas impares
             if (ball.row % 2 === 0) {
-                if (topBalls[ball.row + 1][ball.column] && 
+                if (topBalls[ball.row + 1] &&
+                    topBalls[ball.row + 1][ball.column] && 
                     ball.color === topBalls[ball.row + 1][ball.column].color &&
                     ballsDown.indexOf(topBalls[ball.row + 1][ball.column]) === -1) {
                         ballsDown.push(topBalls[ball.row + 1][ball.column]);
                         checkBallsDown(topBalls[ball.row + 1][ball.column], ballsDown);
                 }
-                else if (topBalls[ball.row + 1][ball.column - 1] && 
+                if (topBalls[ball.row + 1] &&
+                    topBalls[ball.row + 1][ball.column - 1] && 
                     ball.color === topBalls[ball.row + 1][ball.column - 1].color &&
                     ballsDown.indexOf(topBalls[ball.row + 1][ball.column - 1]) === -1) {
                         ballsDown.push(topBalls[ball.row + 1][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row + 1][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row][ball.column - 1] && 
+                if (topBalls[ball.row] &&
+                    topBalls[ball.row][ball.column - 1] && 
                     ball.color === topBalls[ball.row][ball.column - 1].color &&
                     ballsDown.indexOf(topBalls[ball.row][ball.column - 1]) === -1) {
                         ballsDown.push(topBalls[ball.row][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1] &&
+                if (topBalls[ball.row - 1] &&
                     topBalls[ball.row - 1][ball.column - 1] && 
                     ball.color === topBalls[ball.row - 1][ball.column - 1].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column - 1]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1] &&
+                if (topBalls[ball.row - 1] &&
                     topBalls[ball.row - 1][ball.column] && 
                     ball.color === topBalls[ball.row - 1][ball.column].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column], ballsDown);
                 }
-                else if (topBalls[ball.row][ball.column + 1] && 
+                if (topBalls[ball.row] &&
+                    topBalls[ball.row][ball.column + 1] &&
                     ball.color === topBalls[ball.row][ball.column + 1].color &&
                     ballsDown.indexOf(topBalls[ball.row][ball.column + 1]) === -1) {
                         ballsDown.push(topBalls[ball.row][ball.column + 1]);
@@ -269,39 +278,43 @@ window.onload = function () {
                 }
             }
             else {
-                if (topBalls[ball.row + 1][ball.column] && 
+                if (topBalls[ball.row + 1] &&
+                    topBalls[ball.row + 1][ball.column] && 
                     ball.color === topBalls[ball.row + 1][ball.column].color && 
                     ballsDown.indexOf(topBalls[ball.row + 1][ball.column]) === -1 ) {
                         ballsDown.push(topBalls[ball.row + 1][ball.column]);
                         checkBallsDown(topBalls[ball.row + 1][ball.column], ballsDown);
                 }
-                else if (topBalls[ball.row + 1][ball.column + 1] && 
+                if (topBalls[ball.row + 1] &&
+                    topBalls[ball.row + 1][ball.column + 1] && 
                     ball.color === topBalls[ball.row + 1][ball.column + 1].color &&
                     ballsDown.indexOf(topBalls[ball.row + 1][ball.column + 1]) === -1 ) {
                         ballsDown.push(topBalls[ball.row + 1][ball.column + 1]);
                         ballsDown.push(topBalls[ball.row + 1][ball.column + 1], ballsDown);
                 }
-                else if (topBalls[ball.row][ball.column - 1] && 
+                if (topBalls[ball.row] &&
+                    topBalls[ball.row][ball.column - 1] && 
                     ball.color === topBalls[ball.row][ball.column - 1].color &&
                     ballsDown.indexOf(topBalls[ball.row][ball.column - 1]) === -1) {
                         ballsDown.push(topBalls[ball.row][ball.column - 1]);
                         checkBallsDown(topBalls[ball.row][ball.column - 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1] &&
+                if (topBalls[ball.row - 1] &&
                     topBalls[ball.row - 1][ball.column + 1] && 
                     ball.color === topBalls[ball.row - 1][ball.column + 1].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column + 1]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column + 1]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column + 1], ballsDown);
                 }
-                else if (topBalls[ball.row - 1] &&
+                if (topBalls[ball.row - 1] &&
                     topBalls[ball.row - 1][ball.column] && 
                     ball.color === topBalls[ball.row - 1][ball.column].color &&
                     ballsDown.indexOf(topBalls[ball.row - 1][ball.column]) === -1) {
                         ballsDown.push(topBalls[ball.row - 1][ball.column]);
                         checkBallsDown(topBalls[ball.row - 1][ball.column], ballsDown);
                 }
-                else if (topBalls[ball.row][ball.column + 1] && 
+                if (topBalls[ball.row] &&
+                    topBalls[ball.row][ball.column + 1] && 
                     ball.color === topBalls[ball.row][ball.column + 1].color &&
                     ballsDown.indexOf(topBalls[ball.row][ball.column + 1]) === -1) {
                         ballsDown.push(topBalls[ball.row][ball.column + 1]);
@@ -316,7 +329,7 @@ window.onload = function () {
 
         function drawBackgroundCanvas() {
             var background = new Image();
-            background.src = "https://localhost:4443/Ironhack/Bubble-Shooter-Game/css/images/image-background.jpg";
+            background.src = "./css/images/image-background.jpg";
             ctx.drawImage(background, 0, 0);
         }
 
