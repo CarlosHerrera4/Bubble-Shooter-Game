@@ -180,9 +180,8 @@ window.onload = function () {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 ball.move();
-                ball.draw();
-
                 drawBackgroundCanvas();
+                ball.draw();
                 drawBalls();
             }
 
