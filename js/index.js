@@ -43,7 +43,7 @@ window.onload = function () {
         topBalls.push(topBall);
     }
 
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 10; i++) {
         topBalls.push([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]);
     }
 
@@ -166,7 +166,6 @@ window.onload = function () {
                 drawBackgroundCanvas();
                 drawBalls();
 
-
                 // Creamos bola nueva cuando desaparece la primera
                 ball = new Ball(ctx, canvas.width / 2, canvas.height - 20, 20, 0, 0, null, null);
                 ball.color = firstBall.color;
@@ -214,7 +213,6 @@ window.onload = function () {
                     }
                 }
             }
-            console.log('CollisionBall: ' + collisionBall);
             return [state, collisionBall, row, column];
         }
 
@@ -225,6 +223,11 @@ window.onload = function () {
                         topBalls[i][j].draw();
                     }
                 }
+            }
+            ///////////////////////////////////////////////////
+            
+            if (topBalls[15] === [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) {
+                alert('Has perdido, pringao!')
             }
         }
 
