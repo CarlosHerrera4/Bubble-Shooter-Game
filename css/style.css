@@ -14,3 +14,36 @@ canvas {
     justify-content: center;
 
 }
+
+.buttonsControls {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    background-color: #03800b;
+    margin: 35px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 13px;
+    line-height: 32px;
+    float: left;
+}
+
+.button:hover {
+    opacity: 0.50;
+    -moz-opacity: .50;
+    filter: alpha (opacity=50);
+}
+
+.button a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 5px 5px 0;
+}
