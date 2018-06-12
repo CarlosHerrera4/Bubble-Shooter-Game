@@ -1,7 +1,4 @@
 window.onload = function () {
-
-
-
     // Tablero
     var canvas = document.createElement("canvas");
     canvas.classList.add("canvas-space");
@@ -231,19 +228,12 @@ window.onload = function () {
         }
 
         function drawBalls() {
-            // Comprobamos si se ha llegado al tope
-            var gameState = true;
-            for (k = 0; k < topBalls[14].length; k++) {
-                if (topBalls[14][k] != null) {
-                    gameState = false;
-                }
-            }
-            if (gameState === false) {
+            if (checkIfGameOver(topBalls) === false) {
                 $('#gameOverModal').modal('show');
                 //alert('Has perdido, pringao!')
             }
 
-            ////////////////////////////////////////////
+            
             for (i = 0; i < topBalls.length; i++) {
                 for (j = 0; j < topBalls[i].length; j++) {
                     if (topBalls[i][j]) {
@@ -359,7 +349,29 @@ window.onload = function () {
             ctx.drawImage(background, 0, 0);
         }
 
-        
+        function checkIfGameOver() {
+            var gameState = true;
+            for (k = 0; k < topBalls[14].length; k++) {
+                if (topBalls[14][k] != null) {
+                    gameState = false;
+                }
+            }
+            return gameState;
+        }
+
+        // function checkIfWin() {
+        //     var state = false;
+        //     var arr = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+        //     for (i = 0; i < 22; i++) {
+        //         if (topBalls[i] === arr) {
+
+        //         }
+        //         else {
+        //             state = true;
+        //         }
+        //     }
+        //     if (state === false)
+        // }
 
     });
 

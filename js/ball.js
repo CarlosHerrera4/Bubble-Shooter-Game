@@ -30,7 +30,6 @@ Ball.prototype.clear = function() {
 Ball.prototype.setRandomColor = function () {
     // var colors [rojo, amarillo, verde, azul, celeste, morado]
     var colors = ['#cc0000', '#ffff00', '#39e600', '#4d4dff', '#00ffff', '#e600e6'];
-    //this.ctx.fillStyle = colors[Math.round(Math.random() * 5)];
 };
 
 Ball.prototype.move = function () {
@@ -72,37 +71,3 @@ Ball.prototype.draw = function () {
 
     this.ctx.closePath();
 };
-
-// Ball.prototype.faster = function () {
-//     this.vx *= 1.1;
-//     this.vy *= 1.1;
-// }
-
-// Ball.prototype.slower = function () {
-//     this.vx *= 0.9;
-//     this.vy *= 0.9;
-// }
-
-// Ball.prototype.moveRight = function () {
-//     if (this.x + this.r < this.ctx.canvas.width) {
-//         this.x += this.vx;
-//     }
-// }
-
-// Ball.prototype.moveUp = function () {
-//     if (this.y - this.r > 0) {
-//         this.y -= this.vy;
-//     }
-// }
-
-// Ball.prototype.moveDown = function () {
-//     if (this.y - this.r >= this.ctx.canvas.height) {
-//         this.y += this.vy;
-//     }
-// }
-
-// Ball.prototype.moveLeft = function () {
-//     if (this.x - this.r > 0) {
-//         this.x -= this.vx;
-//     }
-// }
