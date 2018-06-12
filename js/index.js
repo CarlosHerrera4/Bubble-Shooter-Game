@@ -378,11 +378,4 @@ window.onload = function () {
 
     });
 
-
-    function restartGame () {
-        window.location.href(window.location)
-    }
-
-
-
 };
