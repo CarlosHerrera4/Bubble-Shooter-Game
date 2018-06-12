@@ -1,4 +1,7 @@
 window.onload = function () {
+
+
+
     // Tablero
     var canvas = document.createElement("canvas");
     canvas.classList.add("canvas-space");
@@ -13,6 +16,12 @@ window.onload = function () {
         background.src = "./css/images/image-background.jpg";
         ctx.drawImage(background, 0, 0);
     }
+
+    // Cookies
+    var cookies = setTimeout(function () {
+        $('#cookiesModal').modal('show');
+
+    }, 2000);
 
     // Próximas bolas
     var canvas2 = document.createElement("canvas");
@@ -217,6 +226,19 @@ window.onload = function () {
         }
 
         function drawBalls() {
+            // Comprobamos si se ha llegado al tope
+            var gameState = true;
+            for (k = 0; k < topBalls[14].length; k++) {
+                if (topBalls[14][k] != null) {
+                    gameState = false;
+                }
+            }
+            if (gameState === false) {
+                $('#gameOverModal').modal('show');
+                //alert('Has perdido, pringao!')
+            }
+
+            ////////////////////////////////////////////
             for (i = 0; i < topBalls.length; i++) {
                 for (j = 0; j < topBalls[i].length; j++) {
                     if (topBalls[i][j]) {
@@ -224,11 +246,7 @@ window.onload = function () {
                     }
                 }
             }
-            ///////////////////////////////////////////////////
-            
-            if (topBalls[15] === [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]) {
-                alert('Has perdido, pringao!')
-            }
+
         }
 
         function checkBallsDown(ball, ballsDown) {
@@ -336,22 +354,15 @@ window.onload = function () {
             ctx.drawImage(background, 0, 0);
         }
 
+        
+
     });
 
 
-    // var balls = [];
-    // setInterval(function () {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function restartGame () {
+        window.location.href(window.location)
+    }
 
-    //     //balls[0].move();
-    //     // balls[0].draw();
-
-
-    //     // balls.forEach(function (ball) {
-    //     //     ball.move();
-    //     //     ball.draw();
-    //     // });
-    // }, 16);
 
 
 };
