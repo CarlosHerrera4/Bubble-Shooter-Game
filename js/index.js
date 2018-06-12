@@ -233,6 +233,10 @@ window.onload = function () {
                 //alert('Has perdido, pringao!')
             }
 
+            if (checkIfGameOver === false) {
+                $('#winModal').modal('show');
+            }
+
             
             for (i = 0; i < topBalls.length; i++) {
                 for (j = 0; j < topBalls[i].length; j++) {
@@ -359,19 +363,18 @@ window.onload = function () {
             return gameState;
         }
 
-        // function checkIfWin() {
-        //     var state = false;
-        //     var arr = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
-        //     for (i = 0; i < 22; i++) {
-        //         if (topBalls[i] === arr) {
-
-        //         }
-        //         else {
-        //             state = true;
-        //         }
-        //     }
-        //     if (state === false)
-        // }
+        function checkIfWin() {
+            var state = false;
+            // var arr = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+            for (i = 0; i < topBalls.length; i++) {
+                for (j = 0; j < topBalls[i].length; j++) {
+                    if (typeof(topBalls[i][j]) != null) {
+                        state = true
+                    }
+                }
+            }
+            return state;
+        }
 
     });
 
