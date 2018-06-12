@@ -70,6 +70,11 @@ window.onload = function () {
 
     // Evento cuando el usuario hace clic
     $(".canvas-space").click(function (evt) {
+        // Sonido
+        var audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', './sounds/zas.mp3');
+        audioElement.play();
+
         // Calculamos velocidad
         ball.vx = (evt.offsetX - (canvas.width/2)) / 32;
         ball.vy = (canvas.height - evt.offsetY) / 32;
